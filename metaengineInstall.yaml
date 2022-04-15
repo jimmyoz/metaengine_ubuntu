@@ -1,0 +1,39 @@
+sudo apt-get install -y unzip
+sudo unzip metaengine.zip
+
+sudo mkdir /home/metaengine 
+sudo cp ./metaengine/* /home/metaengine/
+
+sudo cp /home/metaengine/metaengine /usr/bin/
+sudo chmod +x /usr/bin/metaengine
+
+sudo mkdir /var/lib/metaengine
+sudo cp /home/metaengine/metaengine-config-053.yaml /var/lib/metaengine
+sudo chmod +r /var/lib/metaengine/
+
+sudo mkdir /data
+cd /data
+sudo mkdir metaengine
+
+sudo chmod +w /data/metaengine/
+sudo cp /home/metaengine/metaengine.service /etc/systemd/system/
+
+#重新加载配置文件
+sudo systemctl daemon-reload
+##后台启动metaengine服务
+sudo systemctl start metaengine.service
+##设置系统重启自动启动metaengine
+sudo systemctl enable metaengine.service
+
+# #一键提现脚本
+sudo cp /home/metaengine/cashout /usr/bin/
+sudo chmod +x /usr/bin/cashout
+
+sudo cp /home/metaengine/cashout.service /etc/systemd/system/
+
+# #重新加载配置文件
+sudo systemctl daemon-reload
+# ##后台启动cashout服务
+sudo systemctl start cashout.service
+# ##设置系统重启自动启动cashout
+sudo systemctl enable cashout.service
